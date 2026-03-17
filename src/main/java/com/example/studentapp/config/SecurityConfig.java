@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration // Tells Spring this class contains setup instructions
+@Configuration
 public class SecurityConfig {
 
-    @Bean // Tells Spring to create this object and keep it ready to inject anywhere!
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
