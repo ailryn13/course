@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container" style="max-width: 400px;">
+    <h2>Student Login</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <small id="emailError" style="color: red; display: none; margin-top: 5px;">Please enter a valid email address.</small>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <small id="passwordError" style="color: red; display: none; margin-top: 5px;">Password cannot be empty.</small>
+        </div>
+        <button type="submit" id="loginBtn" class="primary-btn">Login</button>
+    </form>
+    <p id="message"></p>
+    <p style="text-align: center;">Don't have an account? <a href="register.html">Register here</a></p>
+</div>
+
+<script src="js/login.js"></script>
+
+</body>
+</html>

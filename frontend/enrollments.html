@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Enrollments</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-links">
+        <a href="dashboard.html">⬅ Back to Dashboard</a> |
+        <a href="courses.html">View All Courses</a>
+    </div>
+
+    <h2>My Enrollments</h2>
+    <p id="message"></p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Enrollment ID</th>
+            <th>Course Name</th>
+            <th>Duration</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="enrollmentTableBody">
+        </tbody>
+    </table>
+</div>
+
+<div id="customConfirmModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Confirm Unenrollment</h3>
+        <p>Are you sure you want to drop this course?</p>
+        <div class="modal-actions">
+            <button class="modal-btn btn-cancel" onclick="closeConfirmModal()">Cancel</button>
+            <button class="modal-btn btn-danger" onclick="executeUnenroll()">Yes, Drop It</button>
+        </div>
+    </div>
+</div>
+
+<div id="customAlertModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3 id="alertTitle">Notification</h3>
+        <p id="alertMessage">Message goes here.</p>
+        <div class="modal-actions">
+            <button class="modal-btn btn-confirm" onclick="closeAlertModal()">OK</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/enrollments.js"></script>
+
+</body>
+</html>

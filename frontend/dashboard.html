@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px; text-align: center;">
+    <h1 id="welcomeMessage">Welcome, Student!</h1>
+    <p>What would you like to do today?</p>
+
+    <div class="nav-links" style="display: flex; justify-content: space-around; margin-top: 30px;">
+        <a href="courses.html" class="primary-btn" style="padding: 10px 20px; border-radius: 4px; display: inline-block;">View Available Courses</a>
+        <a href="enrollments.html" class="primary-btn" style="padding: 10px 20px; border-radius: 4px; display: inline-block;">My Enrollments</a>
+    </div>
+
+    <button class="danger-btn" onclick="logout()" style="margin-top: 30px;">Logout</button>
+</div>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>

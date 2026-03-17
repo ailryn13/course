@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Courses</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-links">
+        <a href="dashboard.html">⬅ Back to Dashboard</a> |
+        <a href="enrollments.html">View My Enrollments</a>
+    </div>
+
+    <h2>Available Courses</h2>
+    <p id="message"></p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Duration</th>
+            <th>Seats Available</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="courseTableBody">
+        </tbody>
+    </table>
+</div>
+
+<div id="alertModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3 id="alertTitle">Notification</h3>
+        <p id="alertMessage">Message goes here.</p>
+        <div class="modal-actions">
+            <button class="modal-btn btn-confirm" onclick="closeAlertModal()">OK</button>
+        </div>
+    </div>
+</div>
+<script src="js/courses.js"></script>
+
+</body>
+</html>
