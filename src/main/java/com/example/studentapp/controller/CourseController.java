@@ -21,7 +21,7 @@ public class CourseController {
     private final CourseService courseService;
 
     @Autowired
-    private CourseController(CourseService courseService){
+    public CourseController(CourseService courseService){
         this.courseService = courseService;
     }
 

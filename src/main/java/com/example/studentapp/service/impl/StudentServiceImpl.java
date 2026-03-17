@@ -101,8 +101,8 @@ public class StudentServiceImpl implements StudentService {
             throw new AppExceptions.BadRequestException("Registration failed: Invalid email format!");
         }
         if(!ValidationUtils.isValidPassword(student.getPassword())) {
-            logger.warn("Validation failed: Password length is less than 6 characters.");
-            throw new AppExceptions.BadRequestException("Registration failed: Password must be at least 6 characters!");
+            logger.warn("Validation failed: Password length is less than {} characters.",ValidationUtils.MIN_PASSWORD_LENGTH);
+            throw new AppExceptions.BadRequestException("Registration failed: Password must be at least " + ValidationUtils.MIN_PASSWORD_LENGTH +"characters!");
         }
     }
 }

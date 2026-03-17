@@ -85,16 +85,17 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         }
 
         try {
-            course.setAvailableSeats(course.getAvailableSeats() - 1);
-            courseRepository.save(course);
-
             EnrollmentBean enrollment = new EnrollmentBean();
             enrollment.setStudent(student);
             enrollment.setCourse(course);
-
             EnrollmentBean savedEnrollment = enrollmentRepository.save(enrollment);
+
+            course.setAvailableSeats(course.getAvailableSeats() - 1);
+            courseRepository.save(course);
+
             logger.info("Successfully enrolled Student ID {} in Course ID {}", studentId, courseId);
             return convertToDto(savedEnrollment);
+
         } catch (DataIntegrityViolationException ex) {
             logger.error("Database constraint violation during enrollment: {}", ex.getMessage());
             throw new AppExceptions.BadRequestException("Could not complete enrollment due to a database error.");

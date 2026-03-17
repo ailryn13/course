@@ -1,13 +1,16 @@
 package com.example.studentapp.service.impl;
 
 import com.example.studentapp.dto.CourseDTO;
-import com.example.studentapp.dto.CourseResponse; // Imported the concrete class!
+import com.example.studentapp.dto.CourseResponse;
 import com.example.studentapp.entity.CourseBean;
 import com.example.studentapp.exception.AppExceptions;
 import com.example.studentapp.repository.CourseRepository;
 import com.example.studentapp.service.CourseService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +18,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImpl implements CourseService {
+
+    // 1. Added Logger for the Service Layer
+    private static final Logger logger = LogManager.getLogger(CourseServiceImpl.class);
 
     private final CourseRepository courseRepository;
 
@@ -25,7 +31,6 @@ public class CourseServiceImpl implements CourseService {
 
     // --- Private Helper Method ---
     private CourseDTO convertToDto(CourseBean course) {
-        // We instantiate the Response class, but return the Interface!
         CourseResponse courseDto = new CourseResponse();
         BeanUtils.copyProperties(course, courseDto);
         return courseDto;
@@ -34,18 +39,25 @@ public class CourseServiceImpl implements CourseService {
     // --- Interface Methods ---
 
     @Override
-    // 1. Updated parameter to CourseBean to match the interface!
     public CourseDTO createCourse(CourseBean courseBean){
+        logger.info("Attempting to create a new course: {}", courseBean.getName());
 
-        // 2. We don't need to convert to an entity anymore, it's already an entity!
-        courseBean.setAvailableSeats(courseBean.getTotalSeats());
-        CourseBean savedCourse = courseRepository.save(courseBean);
+        try {
+            courseBean.setAvailableSeats(courseBean.getTotalSeats());
+            CourseBean savedCourse = courseRepository.save(courseBean);
 
-        return convertToDto(savedCourse);
+            logger.info("Successfully created course with ID: {}", savedCourse.getId());
+            return convertToDto(savedCourse);
+        } catch (DataIntegrityViolationException ex) {
+            // 2. Targeted Try-Catch for database constraints
+            logger.error("Database constraint violation while creating course '{}': {}", courseBean.getName(), ex.getMessage());
+            throw new AppExceptions.BadRequestException("Failed to create course due to invalid data or a database conflict.");
+        }
     }
 
     @Override
     public List<CourseDTO> getAllCourses(){
+        logger.debug("Fetching all courses from the database.");
         return courseRepository.findAll()
                 .stream()
                 .map(this::convertToDto)
@@ -54,8 +66,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseDTO getCourseById(Long id){
+        logger.debug("Fetching course by ID: {}", id);
         CourseBean course = courseRepository.findById(id)
-                .orElseThrow(() -> new AppExceptions.ResourceNotFoundException("Course not found with ID: " + id));
+                .orElseThrow(() -> {
+                    logger.warn("Course lookup failed: ID {} not found", id);
+                    return new AppExceptions.ResourceNotFoundException("Course not found with ID: " + id);
+                });
         return convertToDto(course);
     }
 }
