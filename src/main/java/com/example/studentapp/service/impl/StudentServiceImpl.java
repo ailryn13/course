@@ -51,7 +51,6 @@ public class StudentServiceImpl implements StudentService {
         String hashedPassword = passwordEncoder.encode(student.getPassword());
         student.setPassword(hashedPassword);
 
-        // 2. Targeted Try-Catch: Catching DB constraints and wrapping them in a business exception
         try {
             logger.debug("Attempting to save student to the database.");
             StudentBean savedStudent = studentRepository.save(student);
@@ -69,7 +68,6 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Starting login process for email: {}", email);
         String cleanEmail = email != null ? email.trim() : null;
 
-        // Utilizing ValidationUtils here as well
         if(!ValidationUtils.isValidEmail(cleanEmail)){
             logger.warn("Login failed: Invalid email format for input: {}", cleanEmail);
             throw new AppExceptions.BadRequestException("Invalid email format!");
@@ -90,7 +88,6 @@ public class StudentServiceImpl implements StudentService {
         return new StudentResponse(student.getId(), student.getName(), student.getEmail());
     }
 
-    // Extracted helper method for readability (DRY Principle)
     private void validateStudentInputs(StudentBean student, String cleanName, String cleanEmail) {
         if(!ValidationUtils.isValidName(cleanName)) {
             logger.warn("Validation failed: Invalid name format '{}'", cleanName);

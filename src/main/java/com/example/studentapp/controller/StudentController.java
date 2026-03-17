@@ -19,7 +19,6 @@ public class StudentController {
 
     private static final Logger logger = LogManager.getLogger(StudentController.class);
 
-    // Injecting the Interface! Spring automatically uses StudentServiceImpl
     private final StudentService studentService;
     private final EnrollmentService enrollmentService;
 
@@ -32,7 +31,6 @@ public class StudentController {
     public ResponseEntity<?> registerStudent(@RequestBody StudentBean student){
         logger.info("Attempting to register a new student with email: {}", student.getEmail());
 
-        // Using the DTO
         StudentDTO savedStudent = studentService.registerStudent(student);
 
         Map<String,Object> response = new HashMap<>();
@@ -50,7 +48,6 @@ public class StudentController {
 
         logger.info("login attempt for email: {}", email);
 
-        // Using the DTO
         StudentDTO loggedInStudent = studentService.loginStudent(email, password);
 
         Map<String, Object> response = new HashMap<>();

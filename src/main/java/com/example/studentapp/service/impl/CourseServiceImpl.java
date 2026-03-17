@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    // 1. Added Logger for the Service Layer
     private static final Logger logger = LogManager.getLogger(CourseServiceImpl.class);
 
     private final CourseRepository courseRepository;
@@ -29,14 +28,11 @@ public class CourseServiceImpl implements CourseService {
         this.courseRepository = courseRepository;
     }
 
-    // --- Private Helper Method ---
     private CourseDTO convertToDto(CourseBean course) {
         CourseResponse courseDto = new CourseResponse();
         BeanUtils.copyProperties(course, courseDto);
         return courseDto;
     }
-
-    // --- Interface Methods ---
 
     @Override
     public CourseDTO createCourse(CourseBean courseBean){
@@ -49,7 +45,6 @@ public class CourseServiceImpl implements CourseService {
             logger.info("Successfully created course with ID: {}", savedCourse.getId());
             return convertToDto(savedCourse);
         } catch (DataIntegrityViolationException ex) {
-            // 2. Targeted Try-Catch for database constraints
             logger.error("Database constraint violation while creating course '{}': {}", courseBean.getName(), ex.getMessage());
             throw new AppExceptions.BadRequestException("Failed to create course due to invalid data or a database conflict.");
         }

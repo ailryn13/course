@@ -1,6 +1,6 @@
-package com.example.studentapp.entity; //course bean
+package com.example.studentapp.entity;
 
-import jakarta.persistence.*; //create a dto
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "COURSE")
