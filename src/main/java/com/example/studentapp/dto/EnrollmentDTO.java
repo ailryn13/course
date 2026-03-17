@@ -1,24 +1,12 @@
 package com.example.studentapp.dto;
 
-import java.time.LocalDateTime;
+// Make sure this says 'interface', not 'class'!
+public interface EnrollmentDTO {
 
-public class EnrollmentDTO {
-    private Long id;
-    private StudentDTO student;
-    private CourseDTO course;
-    private LocalDateTime enrollmentDate;
+    Long getId();
 
-    public EnrollmentDTO() {}
+    StudentDTO getStudent();
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    CourseDTO getCourse();
 
-    public StudentDTO getStudent() { return student; }
-    public void setStudent(StudentDTO student) { this.student = student; }
-
-    public CourseDTO getCourse() { return course; }
-    public void setCourse(CourseDTO course) { this.course = course; }
-
-    public LocalDateTime getEnrollmentDate() { return enrollmentDate; }
-    public void setEnrollmentDate(LocalDateTime enrollmentDate) { this.enrollmentDate = enrollmentDate; }
 }

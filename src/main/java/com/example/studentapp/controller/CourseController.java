@@ -1,6 +1,7 @@
 package com.example.studentapp.controller;
 
 import com.example.studentapp.dto.CourseDTO; // <-- Added DTO import
+import com.example.studentapp.entity.CourseBean;
 import com.example.studentapp.service.CourseService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,14 +26,10 @@ public class CourseController {
     }
 
     @PostMapping
-    // <-- Changed Course to CourseDto in the return type and parameter
-    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDto){
-        logger.info("Attempting to create a new Course: {}", courseDto.getName());
-
-        // <-- Changed Course to CourseDto here
-        CourseDTO savedCourse = courseService.createCourse(courseDto);
-
-        logger.info("Successfully created course with ID: {}", savedCourse.getId());
+    // Change parameter back to CourseBean!
+    public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseBean courseBean){
+        logger.info("Attempting to create a new Course: {}", courseBean.getName());
+        CourseDTO savedCourse = courseService.createCourse(courseBean);
         return ResponseEntity.ok(savedCourse);
     }
 

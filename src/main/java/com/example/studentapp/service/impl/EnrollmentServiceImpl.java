@@ -1,8 +1,6 @@
 package com.example.studentapp.service.impl;
 
-import com.example.studentapp.dto.CourseDTO;
-import com.example.studentapp.dto.EnrollmentDTO;
-import com.example.studentapp.dto.StudentDTO;
+import com.example.studentapp.dto.*;
 import com.example.studentapp.entity.CourseBean;
 import com.example.studentapp.entity.EnrollmentBean;
 import com.example.studentapp.entity.StudentBean;
@@ -33,20 +31,24 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         this.courseRepository = courseRepository;
     }
 
-    // --- Private DTO Mapping Helper ---
     private EnrollmentDTO convertToDto(EnrollmentBean enrollment) {
-        EnrollmentDTO dto = new EnrollmentDTO();
+        // Fix: Use EnrollmentResponse
+        EnrollmentResponse dto = new EnrollmentResponse();
         BeanUtils.copyProperties(enrollment, dto, "student", "course");
 
         if (enrollment.getStudent() != null) {
-            StudentDTO studentDto = new StudentDTO();
-            BeanUtils.copyProperties(enrollment.getStudent(), studentDto);
-            studentDto.setPassword(null);
+            // Fix: Use StudentResponse (and REMOVE the setPassword(null) line)
+            StudentResponse studentDto = new StudentResponse(
+                    enrollment.getStudent().getId(),
+                    enrollment.getStudent().getName(),
+                    enrollment.getStudent().getEmail()
+            );
             dto.setStudent(studentDto);
         }
 
         if (enrollment.getCourse() != null) {
-            CourseDTO courseDto = new CourseDTO();
+            // Fix: Use CourseResponse
+            CourseResponse courseDto = new CourseResponse();
             BeanUtils.copyProperties(enrollment.getCourse(), courseDto);
             dto.setCourse(courseDto);
         }
@@ -54,7 +56,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return dto;
     }
 
-    // --- Interface Methods ---
     @Override
     @Transactional
     public EnrollmentDTO enrollStudent(Long studentId, Long courseId) {
